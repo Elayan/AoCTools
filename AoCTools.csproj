@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props"
+            Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')"/>
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+        <ProjectGuid>{2B4135AA-96D7-4A50-9F70-5C54BAD08B9D}</ProjectGuid>
+        <OutputType>Library</OutputType>
+        <AppDesignerFolder>Properties</AppDesignerFolder>
+        <RootNamespace>AoCTools</RootNamespace>
+        <AssemblyName>AoCTools</AssemblyName>
+        <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+        <FileAlignment>512</FileAlignment>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>bin\Debug\</OutputPath>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugType>pdbonly</DebugType>
+        <Optimize>true</Optimize>
+        <OutputPath>bin\Release\</OutputPath>
+        <DefineConstants>TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="System"/>
+        <Reference Include="System.Core"/>
+        <Reference Include="System.Data"/>
+        <Reference Include="System.Xml"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Error\Exception\InvalidParameterException.cs" />
+        <Compile Include="Error\Exception\UnknownEnumValueException.cs" />
+        <Compile Include="Frame\ThreeDimensions\Coordinates.cs" />
+        <Compile Include="Frame\TwoDimensions\CardinalDirection.cs" />
+        <Compile Include="Frame\TwoDimensions\Coordinates.cs" />
+        <Compile Include="Frame\TwoDimensions\Map\Abstracts\Map.cs" />
+        <Compile Include="Frame\TwoDimensions\Map\Abstracts\MapCell.cs" />
+        <Compile Include="Frame\TwoDimensions\Map\CharMap.cs" />
+        <Compile Include="Frame\TwoDimensions\Map\CharMapCell.cs" />
+        <Compile Include="Frame\TwoDimensions\Map\CrossLineMap.cs" />
+        <Compile Include="Frame\TwoDimensions\Map\Extensions\MapCardinalDirectionExtensions.cs" />
+        <Compile Include="Frame\TwoDimensions\Map\Interfaces\IMap.cs" />
+        <Compile Include="Frame\TwoDimensions\Map\Interfaces\IMapCell.cs" />
+        <Compile Include="Loggers\Logger.cs" />
+        <Compile Include="Loggers\SeverityLevel.cs" />
+        <Compile Include="Numbers\NonoMath.cs" />
+        <Compile Include="Numbers\Range.cs" />
+        <Compile Include="Properties\AssemblyInfo.cs"/>
+        <Compile Include="File\Reader.cs" />
+        <Compile Include="Strings\StringFormatter.cs" />
+        <Compile Include="Strings\StringHelper.cs" />
+        <Compile Include="Workers\IWorker.cs" />
+        <Compile Include="Workers\WorkerBase.cs" />
+    </ItemGroup>
+    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
+    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+         Other similar extension points exist, see Microsoft.Common.targets.
+    <Target Name="BeforeBuild">
+    </Target>
+    <Target Name="AfterBuild">
+    </Target>
+    -->
+
+</Project>
