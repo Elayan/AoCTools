@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace AoCTools.Frame.TwoDimensions
 {
@@ -55,6 +56,12 @@ namespace AoCTools.Frame.TwoDimensions
         }
 
         #region IEquatable
+
+        /// <inheritsdoc/>
+        public override int GetHashCode()
+        {
+            return Row.GetHashCode() * 17 + Col.GetHashCode();
+        }
 
         /// <inheritsdoc/>
         public override bool Equals(object obj)
@@ -123,5 +130,50 @@ namespace AoCTools.Frame.TwoDimensions
 
         #endregion
 
+        /// <summary>
+        /// Gets all neighbors for all given <paramref name="coords"/>.
+        /// </summary>
+        /// <param name="coords"></param>
+        /// <param name="considerDiagonals">If set to FALSE, it will only consider horizontal and vertical neighbors.</param>
+        /// <returns>Array of all neighbors, no sort, no check for uniqueness.</returns>
+        public static Coordinates[] GetNeighbors(Coordinates[] coords, bool considerDiagonals = true)
+        {
+            var neighbors = new HashSet<Coordinates>(coords);
+
+            for (var i = 0; i < coords.Length; i++)
+            {
+                var coord = coords[i];
+
+                // left
+                neighbors.Add(new Coordinates(coord.Row, coord.Col - 1));
+
+                if (considerDiagonals)
+                {
+                    neighbors.Add(new Coordinates(coord.Row - 1, coord.Col - 1));
+                    neighbors.Add(new Coordinates(coord.Row + 1, coord.Col - 1));
+                }
+
+                // up and down
+                neighbors.Add(new Coordinates(coord.Row - 1, coord.Col));
+                neighbors.Add(new Coordinates(coord.Row + 1, coord.Col));
+
+                // right
+                neighbors.Add(new Coordinates(coord.Row, coord.Col + 1));
+
+                if (considerDiagonals)
+                {
+                    neighbors.Add(new Coordinates(coord.Row - 1, coord.Col + 1));
+                    neighbors.Add(new Coordinates(coord.Row + 1, coord.Col + 1));
+                }
+            }
+
+            for (var i = 0; i < coords.Length; i++)
+            {
+                neighbors.Remove(coords[i]);
+                Debug.WriteLine("Hellow?");
+            }
+
+            return neighbors.ToArray();
+        }
     }
 }

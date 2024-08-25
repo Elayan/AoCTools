@@ -29,41 +29,152 @@ namespace AoCTools_Tests.Frame.TwoDimensions
         public void Constructors()
         {
             Assert.NotNull(_testCoordinates);
-            Assert.True(_testCoordinates.Row == RowValue, $"{nameof(_testCoordinates)} was constructed with {nameof(RowValue)} of {RowValue}.");
-            Assert.True(_testCoordinates.Col == ColValue, $"{nameof(_testCoordinates)} was constructed with {nameof(ColValue)} of {ColValue}.");
+            Assert.AreEqual(RowValue, _testCoordinates.Row, $"{nameof(_testCoordinates)} was constructed with {nameof(RowValue)} of {RowValue}.");
+            Assert.AreEqual(ColValue, _testCoordinates.Col, $"{nameof(_testCoordinates)} was constructed with {nameof(ColValue)} of {ColValue}.");
 
             var copy = new Coordinates(_testCoordinates);
             Assert.NotNull(copy);
-            Assert.True(copy.Row == RowValue, $"Copy of {nameof(_testCoordinates)} should have {nameof(copy.Row)} value of {RowValue}.");
-            Assert.True(copy.Col == ColValue, $"Copy of {nameof(_testCoordinates)} should have {nameof(copy.Col)} value of {ColValue}.");
+            Assert.AreEqual(RowValue, copy.Row, $"Copy of {nameof(_testCoordinates)} should have {nameof(copy.Row)} value of {RowValue}.");
+            Assert.AreEqual(ColValue, copy.Col, $"Copy of {nameof(_testCoordinates)} should have {nameof(copy.Col)} value of {ColValue}.");
         }
 
         [Test]
         public void Equality()
         {
-            Assert.True(_testCoordinates.Equals(_testCoordinates));
-            Assert.False(_testCoordinates.Equals(_otherCoordinates));
+            Assert.AreEqual(_testCoordinates, _testCoordinates);
+            Assert.AreNotEqual(_testCoordinates, _otherCoordinates);
         }
 
         [Test]
         public void Operators()
         {
             var twice = new Coordinates(RowValue * 2, ColValue * 2);
-            Assert.True(twice.Equals(_testCoordinates * 2));
-            Assert.True(twice.Equals(2 * _testCoordinates));
-            Assert.True(twice.Equals(_testCoordinates * 2L));
-            Assert.True(twice.Equals(2L * _testCoordinates));
+            Assert.AreEqual(twice, _testCoordinates * 2);
+            Assert.AreEqual(twice, 2 * _testCoordinates);
+            Assert.AreEqual(twice, _testCoordinates * 2L);
+            Assert.AreEqual(twice, 2L * _testCoordinates);
 
             var half = new Coordinates(RowValue / 2, ColValue / 2);
-            Assert.True(half.Equals(_testCoordinates / 2));
-            Assert.True(half.Equals(_testCoordinates / 2L));
+            Assert.AreEqual(half, _testCoordinates / 2);
+            Assert.AreEqual(half, _testCoordinates / 2L);
 
             var plusOne = new Coordinates(RowValue + 1, ColValue + 1);
-            Assert.True(plusOne.Equals(_testCoordinates + Coordinates.One));
-            Assert.True(plusOne.Equals(Coordinates.One + _testCoordinates));
+            Assert.AreEqual(plusOne, _testCoordinates + Coordinates.One);
+            Assert.AreEqual(plusOne, Coordinates.One + _testCoordinates);
 
             var minusOne = new Coordinates(RowValue - 1, ColValue - 1);
-            Assert.True(minusOne.Equals(_testCoordinates - Coordinates.One));
+            Assert.AreEqual(minusOne, _testCoordinates - Coordinates.One);
+        }
+
+        [Test]
+        public void NeighborsOfSingleCoordinate()
+        {
+            var zeroCorner = new[] { Coordinates.Zero };
+            var zeroCornerNeighbors = Coordinates.GetNeighbors(zeroCorner, considerDiagonals: false);
+            Assert.AreEqual(4, zeroCornerNeighbors.Length, "Should return 4 horizontal and vertical neighbors.");
+            Assert.That(zeroCornerNeighbors, Is.EquivalentTo(
+                new Coordinates[]
+                { 
+                    new Coordinates(-1, 0),
+                    new Coordinates(1, 0),
+                    new Coordinates(0, -1),
+                    new Coordinates(0, 1),
+                }));
+
+            zeroCornerNeighbors = Coordinates.GetNeighbors(zeroCorner);
+            Assert.AreEqual(8, zeroCornerNeighbors.Length, "Should return 8 neighbors.");
+            Assert.That(zeroCornerNeighbors, Is.EquivalentTo(
+                new Coordinates[]
+                {
+                    new Coordinates(-1, 0),
+                    new Coordinates(1, 0),
+                    new Coordinates(0, -1),
+                    new Coordinates(0, 1),
+                    new Coordinates(-1, -1),
+                    new Coordinates(-1, 1),
+                    new Coordinates(1, -1),
+                    new Coordinates(1, 1),
+                }));
+        }
+
+        [Test]
+        public void NeighborsOfCoordinates()
+        {
+            var coords = new[] { Coordinates.Zero, _testCoordinates };
+            var neighbors = Coordinates.GetNeighbors(coords, considerDiagonals: false);
+            Assert.AreEqual(8, neighbors.Length, "Should return 8 horizontal and vertical neighbors of two distant coordinates.");
+            Assert.That(neighbors, Is.EquivalentTo(
+                new Coordinates[]
+                {
+                    new Coordinates(-1, 0),
+                    new Coordinates(1, 0),
+                    new Coordinates(0, -1),
+                    new Coordinates(0, 1),
+
+                    new Coordinates(RowValue - 1, ColValue),
+                    new Coordinates(RowValue + 1, ColValue),
+                    new Coordinates(RowValue, ColValue - 1),
+                    new Coordinates(RowValue, ColValue + 1),
+                }));
+
+            neighbors = Coordinates.GetNeighbors(coords);
+            Assert.AreEqual(16, neighbors.Length, "Should return 16 neighbors of two distant coordinates.");
+            Assert.That(neighbors, Is.EquivalentTo(
+                new Coordinates[]
+                {
+                    new Coordinates(-1, 0),
+                    new Coordinates(1, 0),
+                    new Coordinates(0, -1),
+                    new Coordinates(0, 1),
+                    new Coordinates(-1, -1),
+                    new Coordinates(-1, 1),
+                    new Coordinates(1, -1),
+                    new Coordinates(1, 1),
+
+                    new Coordinates(RowValue - 1, ColValue),
+                    new Coordinates(RowValue + 1, ColValue),
+                    new Coordinates(RowValue, ColValue - 1),
+                    new Coordinates(RowValue, ColValue + 1),
+                    new Coordinates(RowValue - 1, ColValue - 1),
+                    new Coordinates(RowValue - 1, ColValue + 1),
+                    new Coordinates(RowValue + 1, ColValue - 1),
+                    new Coordinates(RowValue + 1, ColValue + 1),
+                }));
+        }
+
+        [Test]
+        public void NeighborsOfGroupedCoordinates()
+        {
+            var coords = new[] { Coordinates.Zero, new Coordinates(0, 1) };
+            var neighbors = Coordinates.GetNeighbors(coords, considerDiagonals: false);
+            Assert.AreEqual(6, neighbors.Length, "Should return 6 horizontal and vertical neighbors for group of two coords.");
+            Assert.That(neighbors, Is.EquivalentTo(
+                new Coordinates[]
+                {
+                    new Coordinates(0, -1),
+                    new Coordinates(-1, 0),
+                    new Coordinates(-1, 1),
+                    new Coordinates(1, 0),
+                    new Coordinates(1, 1),
+                    new Coordinates(0, 2),
+                }));
+
+            neighbors = Coordinates.GetNeighbors(coords);
+            Assert.AreEqual(10, neighbors.Length, "Should return 10 neighbors for group of two coords.");
+            Assert.That(neighbors, Is.EquivalentTo(
+                new Coordinates[]
+                {
+                    new Coordinates(0, -1),
+                    new Coordinates(-1, 0),
+                    new Coordinates(-1, 1),
+                    new Coordinates(1, 0),
+                    new Coordinates(1, 1),
+                    new Coordinates(0, 2),
+                    new Coordinates(-1, -1),
+                    new Coordinates(1, -1),
+                    new Coordinates(-1, 2),
+                    new Coordinates(1, 2),
+                }));
         }
     }
 }
