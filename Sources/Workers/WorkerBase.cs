@@ -11,7 +11,7 @@ namespace AoCTools.Workers
     {
         private Stopwatch _timer = new Stopwatch();
         public string[] DataLines { get; private set; }
-        //TODO allow multi-part data (see D19)
+        //TODO allow multi-part data (see 2023D19)
         public virtual object Data { get; } = null;
 
         public long WorkOneStar(string dataPath, SeverityLevel logAbove)

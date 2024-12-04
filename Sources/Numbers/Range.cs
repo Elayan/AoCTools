@@ -84,7 +84,7 @@ namespace AoCTools.Numbers
 
         /// <summary>
         /// Creates a Range that represent the intersection of two ranges.
-        /// Example: A = 1 to 5, B = 2 to 3, result = 2 to 3.
+        /// Example: A = 1 to 3, B = 2 to 5, result = 2 to 3.
         /// </summary>
         /// <param name="rangeA">Intersecting range.</param>
         /// <param name="rangeB">Intersecting range.</param>
@@ -116,6 +116,12 @@ namespace AoCTools.Numbers
         public ulong Size { get; protected set; }
 
         #region IEquatable
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return Min.GetHashCode() * 17 + Max.GetHashCode();
+        }
 
         /// <summary>
         /// Check if Ranges are equal.
@@ -221,7 +227,7 @@ namespace AoCTools.Numbers
 
         /// <summary>
         /// Get range of values within range, at range of indexes.
-        /// Example: range = (2 to 5), index = 1 to 4, value = 3 to 5.
+        /// Example: range = (2 to 5), index = 1 to 3, value = 3 to 5.
         /// </summary>
         /// <param name="range">Range of indexes.</param>
         /// <returns>Range of values.</returns>
