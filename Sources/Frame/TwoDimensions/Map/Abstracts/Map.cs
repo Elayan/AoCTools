@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using AoCTools.Error.Exception;
 using AoCTools.Frame.TwoDimensions.Map.Interfaces;
 
@@ -85,6 +82,21 @@ namespace AoCTools.Frame.TwoDimensions.Map.Abstracts
         /// Column count.
         /// </summary>
         public int ColCount { get; private set; }
+
+        /// <summary>
+        /// Indicates if coordinates are within map bounds.
+        /// </summary>
+        /// <param name="row">Row position.</param>
+        /// <param name="col">Column position.</param>
+        /// <returns>TRUE if coordinates are within map bounds.</returns>
+        public bool IsCoordinateInMap(long row, long col) => row >= 0 && col >= 0 && row < RowCount && col < ColCount;
+
+        /// <summary>
+        /// Indicates if coordinates are within map bounds.
+        /// </summary>
+        /// <param name="coord">Coordinates.</param>
+        /// <returns>TRUE if coordinates are within map bounds.</returns>
+        public bool IsCoordinateInMap(Coordinates coord) => IsCoordinateInMap(coord.Row, coord.Col);
 
         /// <summary>
         /// Title of the Map.
