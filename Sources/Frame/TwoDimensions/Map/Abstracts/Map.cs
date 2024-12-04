@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -69,6 +69,13 @@ namespace AoCTools.Frame.TwoDimensions.Map.Abstracts
         /// <param name="col">Column position.</param>
         /// <returns>Cell at coordinates.</returns>
         public T GetCell(long row, long col) => MapCells[row][col];
+
+        /// <summary>
+        /// Get cell as coordinates.
+        /// </summary>
+        /// <param name="coord">Coordinates.</param>
+        /// <returns>Cell at coordinates.</returns>
+        public T GetCell(Coordinates coord) => GetCell(coord.Row, coord.Col);
 
         /// <summary>
         /// Row count.
