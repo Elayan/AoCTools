@@ -1,5 +1,6 @@
 ﻿using System;
 using AoCTools.Error.Exception;
+using AoCTools.Frame.TwoDimensions;
 using AoCTools.Frame.TwoDimensions.Map;
 using NUnit.Framework;
 
@@ -39,8 +40,14 @@ namespace AoCTools_Tests.Frame.TwoDimensions.Map
             Assert.Throws<InvalidParameterException>(() =>
             {
                 // ReSharper disable once ObjectCreationAsStatement
-                new CharMap(null);
-            }, "Can't create map with null content.");
+                new CharMap(null as char[][]);
+            }, "Can't create map with null char[][] content.");
+
+            Assert.Throws<InvalidParameterException>(() =>
+            {
+                // ReSharper disable once ObjectCreationAsStatement
+                new CharMap(null as string[]);
+            }, "Can't create map with null string[] content.");
 
             Assert.Throws<InvalidParameterException>(() =>
             {
@@ -59,6 +66,30 @@ namespace AoCTools_Tests.Frame.TwoDimensions.Map
                 // ReSharper disable once ObjectCreationAsStatement
                 new CharMap(InvalidContent);
             }, "Can't create map with uneven lines.");
+        }
+
+        [Test]
+        public void GetCells()
+        {
+            Assert.AreEqual(TestCharMap.GetCell(0, 0), TestCharMap.GetCell(Coordinates.Zero), $"GetCell(0,0) = {TestCharMap.GetCell(0, 0)} and GetCell(Coordinates.Zero) = {TestCharMap.GetCell(Coordinates.Zero)}");
+            Assert.AreEqual(TestCharMap.GetCell(1, 1), TestCharMap.GetCell(Coordinates.One), $"GetCell(1,1) = {TestCharMap.GetCell(0, 0)} and GetCell(Coordinates.One) = {TestCharMap.GetCell(Coordinates.Zero)}");
+        }
+
+        [Test]
+        public void IsCoordinatesWithinBounds()
+        {
+            Assert.IsTrue(TestCharMap.IsCoordinateInMap(0, 0), "(0,0) should be in map.");
+            Assert.IsTrue(TestCharMap.IsCoordinateInMap(Coordinates.Zero), "Coordinates.Zero should be in map.");
+
+            Assert.IsFalse(TestCharMap.IsCoordinateInMap(-1, 0), "(-1,0) should not be in map.");
+            Assert.IsFalse(TestCharMap.IsCoordinateInMap(new Coordinates(-1,0)), "Coordinates(-1,0) should not be in map.");
+            Assert.IsFalse(TestCharMap.IsCoordinateInMap(0, -1), "(0,-1) should not be in map.");
+            Assert.IsFalse(TestCharMap.IsCoordinateInMap(new Coordinates(0, -1)), "Coordinates(0,-1) should not be in map.");
+
+            Assert.IsFalse(TestCharMap.IsCoordinateInMap(100, 0), "(100,0) should not be in map.");
+            Assert.IsFalse(TestCharMap.IsCoordinateInMap(new Coordinates(100, 0)), "Coordinates(100,0) should not be in map.");
+            Assert.IsFalse(TestCharMap.IsCoordinateInMap(0, 100), "(0,100) should not be in map.");
+            Assert.IsFalse(TestCharMap.IsCoordinateInMap(new Coordinates(0, 100)), "Coordinates(0,100) should not be in map.");
         }
     }
 }

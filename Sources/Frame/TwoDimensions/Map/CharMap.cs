@@ -22,7 +22,7 @@ namespace AoCTools.Frame.TwoDimensions.Map
         /// </summary>
         /// <param name="mapLines">Chars in cells.</param>
         /// <exception cref="InvalidParameterException"/>
-        public CharMap(string[] mapLines) : this(mapLines.Select(l => l.Select(c => c).ToArray()).ToArray())
+        public CharMap(string[] mapLines) : this(mapLines?.Select(l => l.Select(c => c).ToArray()).ToArray())
         {
         }
 
