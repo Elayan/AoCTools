@@ -27,6 +27,6 @@ namespace AoCTools.Frame.TwoDimensions.Map
         }
 
         /// <inheritdoc/>
-        protected override string LogTitle => "=== MAP ===";
+        protected override string LogTitle => "=== CHAR MAP ===";
     }
 }
