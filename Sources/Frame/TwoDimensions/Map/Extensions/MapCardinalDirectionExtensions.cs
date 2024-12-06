@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using AoCTools.Error.Exception;
+﻿using AoCTools.Error.Exception;
 using AoCTools.Frame.TwoDimensions;
 
 namespace AoCTools.Frame.Map.Extensions
@@ -35,6 +33,13 @@ namespace AoCTools.Frame.Map.Extensions
             : c == CardinalDirection.North ? CardinalDirection.South
             : c == CardinalDirection.South ? CardinalDirection.North
             : c == CardinalDirection.West ? CardinalDirection.East
+            : CardinalDirection.None;
+
+        public static CardinalDirection GetRightTurn(this CardinalDirection c) =>
+            c == CardinalDirection.East ? CardinalDirection.South
+            : c == CardinalDirection.North ? CardinalDirection.East
+            : c == CardinalDirection.South ? CardinalDirection.West
+            : c == CardinalDirection.West ? CardinalDirection.North
             : CardinalDirection.None;
 
         private static Dictionary<CardinalDirection, Coordinates> _cardinalCoords =
