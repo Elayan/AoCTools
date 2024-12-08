@@ -175,5 +175,28 @@ namespace AoCTools.Frame.TwoDimensions
 
             return neighbors.ToArray();
         }
+
+        /// <summary>
+        /// Computes coordinates of point between <paramref name="coordinates1"/> and <paramref name="coordinates2"/>.
+        /// </summary>
+        /// <param name="coordinates1"></param>
+        /// <param name="coordinates2"></param>
+        /// <returns></returns>
+        public static Coordinates GetCenter(Coordinates coordinates1, Coordinates coordinates2)
+        {
+            return (coordinates1 + coordinates2) / 2L;
+        }
+
+        /// <summary>
+        /// Computes coordinates of the point being the symetric of <paramref name="reference"/> by <paramref name="center"/>
+        /// </summary>
+        /// <param name="reference">The reference point for symetry</param>
+        /// <param name="center">Center of symetry</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static Coordinates GetSymmetric(Coordinates reference, Coordinates center)
+        {
+            return center + center - reference;
+        }
     }
 }
