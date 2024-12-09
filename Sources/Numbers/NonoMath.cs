@@ -39,7 +39,7 @@ namespace AoCTools.Numbers
         /// <summary>
         /// Sum of the n first integers.
         /// </summary>
-        public static long SumFirstIntegers(int n)
+        public static long SumFirstIntegers(long n)
         {
             return n * (n + 1) / 2;
         }
