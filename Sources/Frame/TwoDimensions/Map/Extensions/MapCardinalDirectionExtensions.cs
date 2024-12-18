@@ -42,6 +42,13 @@ namespace AoCTools.Frame.Map.Extensions
             : c == CardinalDirection.West ? CardinalDirection.North
             : CardinalDirection.None;
 
+        public static CardinalDirection GetLeftTurn(this CardinalDirection c) =>
+            c == CardinalDirection.East ? CardinalDirection.North
+            : c == CardinalDirection.North ? CardinalDirection.West
+            : c == CardinalDirection.South ? CardinalDirection.East
+            : c == CardinalDirection.West ? CardinalDirection.South
+            : CardinalDirection.None;
+
         private static Dictionary<CardinalDirection, Coordinates> _cardinalCoords =
             new Dictionary<CardinalDirection, Coordinates>
             {
