@@ -58,6 +58,50 @@ namespace AoCTools.Workers
             throw new NotImplementedException();
         }
 
+        public string WorkOneStar_String(string dataPath, SeverityLevel logAbove)
+        {
+            return Work_String(dataPath, logAbove, WorkOneStar_String_Implementation);
+        }
+
+        public string WorkTwoStars_String(string dataPath, SeverityLevel logAbove)
+        {
+            return Work_String(dataPath, logAbove, WorkTwoStars_String_Implementation);
+        }
+
+        private string Work_String(string dataPath, SeverityLevel logAbove, Func<string> implementation)
+        {
+            _timer.Start();
+            Setup(dataPath, logAbove);
+            _timer.Stop();
+            LogRawData();
+            Logger.Log($"Setup ended in {_timer.Elapsed:m\\:ss\\.fff}", SeverityLevel.Medium);
+
+            _timer.Restart();
+            ProcessDataLines();
+            _timer.Stop();
+            LogProcessedData();
+            Logger.Log($"Data processed in {_timer.Elapsed:m\\:ss\\.fff}", SeverityLevel.Medium);
+            Console.WriteLine();
+
+            _timer.Restart();
+            var result = implementation();
+            _timer.Stop();
+            Logger.Log($"Work ended in {_timer.Elapsed:m\\:ss\\.fff}", SeverityLevel.Always);
+            Console.WriteLine();
+
+            return result;
+        }
+
+        protected virtual string WorkOneStar_String_Implementation()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected virtual string WorkTwoStars_String_Implementation()
+        {
+            throw new NotImplementedException();
+        }
+
         private void Setup(string dataPath, SeverityLevel logAbove)
         {
             Logger.ShowAboveSeverity = logAbove;
