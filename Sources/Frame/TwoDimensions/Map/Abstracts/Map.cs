@@ -60,7 +60,7 @@ namespace AoCTools.Frame.TwoDimensions.Map.Abstracts
         public T[] AllCells => MapCells.SelectMany(row => row).ToArray();
 
         /// <summary>
-        /// Get cell as coordinates.
+        /// Get cell at coordinates.
         /// </summary>
         /// <param name="row">Row position.</param>
         /// <param name="col">Column position.</param>
@@ -68,11 +68,38 @@ namespace AoCTools.Frame.TwoDimensions.Map.Abstracts
         public T GetCell(long row, long col) => MapCells[row][col];
 
         /// <summary>
-        /// Get cell as coordinates.
+        /// Get cell at coordinates.
         /// </summary>
         /// <param name="coord">Coordinates.</param>
         /// <returns>Cell at coordinates.</returns>
         public T GetCell(Coordinates coord) => GetCell(coord.Row, coord.Col);
+
+        /// <summary>
+        /// Try get cell at coordinates.
+        /// </summary>
+        /// <param name="row">Row position.</param>
+        /// <param name="col">Column position.</param>
+        /// <param name="cell">Cell at coordinates.</param>
+        /// <returns>TRUE if there's a cell at coordinates, FALSE otherwise.</returns>
+        public bool TryGetCell(long row, long col, out T cell)
+        {
+            if (!IsCoordinateInMap(row, col))
+            {
+                cell = default;
+                return false;
+            }
+            
+            cell = GetCell(row, col);
+            return true;
+        }
+        
+        /// <summary>
+        /// Try get cell at coordinates.
+        /// </summary>
+        /// <param name="coord">Coordinates.</param>
+        /// <param name="cell">Cell at coordinates.</param>
+        /// <returns>TRUE if there's a cell at coordinates, FALSE otherwise.</returns>
+        public bool TryGetCell(Coordinates coord, out T cell) => TryGetCell(coord.Row, coord.Col, out cell);
 
         /// <summary>
         /// Row count.
