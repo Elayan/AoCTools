@@ -43,5 +43,34 @@ namespace AoCTools.Numbers
         {
             return n * (n + 1) / 2;
         }
+
+        /// <summary>
+        /// Sum of integers from n to m.
+        /// </summary>
+        public static long SumIntegersBetween(long n, long m)
+        {
+            return (n + m) * (m - n + 1) / 2L;
+        }
+
+        /// <summary>
+        /// Count the digits of given n.
+        /// </summary>
+        public static int GetDigitCount(long n)
+        {
+            if (n == 0)
+                return 1;
+
+            return (int)Math.Floor(Math.Log10(Math.Abs(n)) + 1);
+        }
+
+        /// <summary>
+        /// Split given n in two parts at given index.
+        /// </summary>
+        public static void SplitDigits(long n, int index, out long left, out long right)
+        {
+            var divisor = (int)Math.Pow(10, index);
+            left = n / divisor;
+            right = n % divisor;
+        }
     }
 }
